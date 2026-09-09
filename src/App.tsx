@@ -12,13 +12,14 @@ export function App() {
     errors,
     handleSubmit,
     onSubmit,
-    isShow,
+    isShowModalSuggestion,
     addMovieToList,
     isShowModalError,
     movieList,
     dataMovie,
     typeMovieError,
     handleRemove,
+    isShowModal,
   } = usePlaylist();
 
   return (
@@ -30,7 +31,7 @@ export function App() {
         imageMovie={dataMovie?.Poster}
         genre={dataMovie?.Genre}
         addToList={addMovieToList}
-        isShowModalSuggestion={isShow}
+        isShowModalSuggestion={isShowModalSuggestion}
       ></CardSuggestionMovie>
 
       <ModalError
@@ -39,7 +40,7 @@ export function App() {
       ></ModalError>
 
       <div
-        className={`min-h-svh bg-amber-200 grid grid-rows-[60px_1fr] grid-cols-[1fr] ${isShow && "brightness-50"}`}
+        className={`min-h-svh bg-amber-200 grid grid-rows-[60px_1fr] grid-cols-[1fr] ${isShowModal && "brightness-50"}`}
       >
         <header className="w-full bg-green-950 flex flex-row justify-between p-2 z-50">
           <h1 className="text-2xl text-white flex flex-row items-center">

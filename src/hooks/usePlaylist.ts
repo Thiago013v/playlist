@@ -21,10 +21,12 @@ export interface DataMovieType {
 }
 
 export function usePlaylist() {
-  const [isShow, setIsShow] = useState<boolean>(false);
+  const [isShowModalSuggestion, setIsShowModalSuggestion] =
+    useState<boolean>(false);
   const [isShowModalError, setIsShowModalError] = useState<boolean>(false);
   const [isShowModalConfirmation, setIsShowModalConfirmation] =
     useState<boolean>(false);
+  const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [typeMovieError, setTypeMovieError] = useState<
     "notFound" | "added" | undefined
   >();
@@ -51,10 +53,6 @@ export function usePlaylist() {
   useEffect(() => {
     localStorage.setItem("movieList", JSON.stringify(movieList));
   }, [movieList]);
-
-  const handleModal = () => {
-    setIsShow(!isShow);
-  };
 
   const onSubmit = async (data: playlistDataType) => {
     const response = await apiMovie(data);
@@ -83,7 +81,8 @@ export function usePlaylist() {
     } else {
       const dataMovie: DataMovieType = response;
       setDataMovie(dataMovie);
-      handleModal();
+      setIsShowModalSuggestion(!isShowModalSuggestion);
+      setIsShowModal(!isShowModal);
     }
   };
 
@@ -92,7 +91,8 @@ export function usePlaylist() {
 
     if (movieObject) {
       setMovieList((prev) => [...prev, movieObject]);
-      handleModal();
+      setIsShowModalSuggestion(!isShowModalSuggestion);
+      setIsShowModal(!isShowModal);
     }
   };
 
@@ -119,7 +119,7 @@ export function usePlaylist() {
     handleSubmit,
     onSubmit,
     errors,
-    isShow,
+    isShowModalSuggestion,
     addMovieToList,
     isShowModalError,
     movieList,
@@ -127,6 +127,7 @@ export function usePlaylist() {
     typeMovieError,
     isShowModalConfirmation,
     setIsShowModalConfirmation,
+    isShowModal,
     handleRemove,
   };
 }
