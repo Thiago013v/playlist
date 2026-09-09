@@ -13,9 +13,7 @@ export function App() {
     errors,
     handleSubmit,
     onSubmit,
-    isShowModalError,
     movieList,
-    typeMovieError,
     handleRemove,
     isShowModal,
   } = usePlaylistContext();
@@ -24,10 +22,7 @@ export function App() {
     <>
       <CardSuggestionMovie></CardSuggestionMovie>
 
-      <ModalError
-        isShowModalError={isShowModalError}
-        typeError={typeMovieError}
-      ></ModalError>
+      <ModalError></ModalError>
 
       <div
         className={`min-h-svh bg-amber-200 grid grid-rows-[60px_1fr] grid-cols-[1fr] ${isShowModal && "brightness-50"}`}
