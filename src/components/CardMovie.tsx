@@ -5,7 +5,11 @@ import { usePlaylist } from "../hooks/usePlaylist";
 interface CardMovieType {
   Poster: string | undefined;
   Id: number;
-  handleRemove: (remove: boolean, id: number) => void;
+  handleRemove: (
+    remove: boolean,
+    id: number,
+    handleShowModalConfirmation: (remove: boolean) => void,
+  ) => void;
   title: string;
 }
 
