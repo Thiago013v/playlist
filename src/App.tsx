@@ -4,6 +4,7 @@ import { usePlaylist, type DataMovieType } from "./hooks/usePlaylist";
 import { CardSuggestionMovie } from "./components/CardSuggestionMovie";
 import { CardMovie } from "./components/CardMovie";
 import { ModalError } from "./components/ModalError";
+import { ModalConfirmation } from "./components/ModalConfirmation";
 
 export function App() {
   const {
@@ -17,8 +18,11 @@ export function App() {
     isShowModalError,
     movieList,
     dataMovie,
-    removeMovieList,
     typeMovieError,
+    isShowModalConfirmation,
+    setIsShowModalConfirmation,
+    handleRemove,
+    setIsRemove
   } = usePlaylist();
 
   return (
@@ -37,6 +41,8 @@ export function App() {
         isShowModalError={isShowModalError}
         typeError={typeMovieError}
       ></ModalError>
+
+      
 
       <div
         className={`min-h-svh bg-amber-200 grid grid-rows-[60px_1fr] grid-cols-[1fr] ${isShow && "brightness-50"}`}
@@ -108,12 +114,15 @@ export function App() {
           <div>
             <ul className="flex flex-row gap-4 items-center justify-center">
               {movieList.map((currentMovie: DataMovieType) => (
-                <CardMovie
-                  key={currentMovie.Id}
-                  Id={currentMovie.Id}
-                  Poster={currentMovie.Poster}
-                  deleteMovie={removeMovieList}
-                ></CardMovie>
+                <li key={currentMovie.Id}>
+                  <CardMovie
+                    Id={currentMovie.Id}
+                    Poster={currentMovie.Poster}
+                    setIsShowModalConfirmation={setIsShowModalConfirmation}
+                  >
+                    <ModalConfirmation isShowModalConfirmation={isShowModalConfirmation} id={currentMovie.Id} handleRemove={handleRemove}></ModalConfirmation>
+                  </CardMovie>
+                </li>
               ))}
             </ul>
           </div>
