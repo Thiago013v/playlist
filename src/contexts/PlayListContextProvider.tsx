@@ -37,7 +37,7 @@ export function PlaylistContextProvider({
   const [typeMovieError, setTypeMovieError] = useState<
     "notFound" | "added" | undefined
   >();
-  const [dataMovie, setDataMovie] = useState<DataMovieType>();
+  const [dataMovie, setDataMovie] = useState<DataMovieType | undefined>();
   const [movieList, setMovieList] = useState<DataMovieType[]>(() => {
     const movieList = localStorage.getItem("movieList");
 

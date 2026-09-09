@@ -1,24 +1,10 @@
 import { motion, AnimatePresence } from "motion/react";
+import { usePlaylistContext } from "../hooks/usePlaylistContext";
 
-interface CardSuggestiontType {
-  imageMovie: string | undefined;
-  title: string | undefined;
-  description: string | undefined;
-  cast: string | undefined;
-  genre: string | undefined;
-  isShowModalSuggestion: boolean;
-  addToList: () => void;
-}
+export function CardSuggestionMovie() {
+  const { dataMovie, isShowModalSuggestion, addMovieToList } =
+    usePlaylistContext();
 
-export function CardSuggestionMovie({
-  imageMovie,
-  title,
-  description,
-  cast,
-  genre,
-  addToList,
-  isShowModalSuggestion,
-}: CardSuggestiontType) {
   return (
     <AnimatePresence initial={false}>
       {isShowModalSuggestion ? (
@@ -30,29 +16,31 @@ export function CardSuggestionMovie({
         >
           <div className="grid grid-cols-[1fr_1fr] grid-rows-[50px_1fr_1fr] h-full">
             <h1 className="col-start-1 col-end-3 row-start-1 row-end-2 text-2xl">
-              {title}
+              {dataMovie?.Title}
             </h1>
 
             <img
-              src={imageMovie}
-              alt={`Poster do ${title}`}
+              src={dataMovie?.Poster}
+              alt={`Poster do ${dataMovie?.Title}`}
               className="col-start-1 col-end-2 row-start-2 row-end-3 rounded-lg"
             />
 
             <div className="flex flex-col justify-around col-start-2 col-end-3 row-start-2 row-end-3">
-              <p>{description}</p>
+              <p>{dataMovie?.Plot}</p>
               <p>
-                <span className="font-extrabold">Elenco</span>: {cast}
+                <span className="font-extrabold">Elenco</span>:{" "}
+                {dataMovie?.Actors}
               </p>
               <p>
-                <span className="font-extrabold">Gênero</span>: {genre}
+                <span className="font-extrabold">Gênero</span>:{" "}
+                {dataMovie?.Genre}
               </p>
             </div>
 
             <div className="col-start-1 col-end-3 row-start-3 row-end-4 flex flex-row justify-center items-center mt-2">
               <button
                 className=" border border-black w-[90%] rounded-md cursor-pointer hover:bg-green-950 hover:text-white"
-                onClick={addToList}
+                onClick={addMovieToList}
               >
                 Add to List
               </button>

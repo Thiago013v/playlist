@@ -1,5 +1,8 @@
 import { createContext } from "react";
-import type { DataMovieType, playlistDataType } from "../hooks/usePlaylist";
+import type {
+  DataMovieType,
+  playlistDataType,
+} from "../contexts/PlayListContextProvider";
 import type {
   Control,
   FieldValues,

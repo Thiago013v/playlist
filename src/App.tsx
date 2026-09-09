@@ -1,6 +1,7 @@
 import { TbMovie } from "react-icons/tb";
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import { usePlaylist, type DataMovieType } from "./hooks/usePlaylist";
+import { usePlaylistContext } from "./hooks/usePlaylistContext";
+import type { DataMovieType } from "./contexts/PlayListContextProvider";
 import { CardSuggestionMovie } from "./components/CardSuggestionMovie";
 import { CardMovie } from "./components/CardMovie";
 import { ModalError } from "./components/ModalError";
@@ -12,27 +13,16 @@ export function App() {
     errors,
     handleSubmit,
     onSubmit,
-    isShowModalSuggestion,
-    addMovieToList,
     isShowModalError,
     movieList,
-    dataMovie,
     typeMovieError,
     handleRemove,
     isShowModal,
-  } = usePlaylist();
+  } = usePlaylistContext();
 
   return (
     <>
-      <CardSuggestionMovie
-        title={dataMovie?.Title}
-        cast={dataMovie?.Actors}
-        description={dataMovie?.Plot}
-        imageMovie={dataMovie?.Poster}
-        genre={dataMovie?.Genre}
-        addToList={addMovieToList}
-        isShowModalSuggestion={isShowModalSuggestion}
-      ></CardSuggestionMovie>
+      <CardSuggestionMovie></CardSuggestionMovie>
 
       <ModalError
         isShowModalError={isShowModalError}
