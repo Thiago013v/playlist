@@ -23,8 +23,8 @@ export interface DataMovieType {
 export function usePlaylist() {
   const [isShow, setIsShow] = useState<boolean>(false);
   const [isShowModalError, setIsShowModalError] = useState<boolean>(false);
-  const [isShowModalConfirmation, setIsShowModalConfirmation] = useState<boolean>(false)
-  const [isRemove, setIsRemove] = useState<boolean>(false)
+  const [isShowModalConfirmation, setIsShowModalConfirmation] =
+    useState<boolean>(false);
   const [typeMovieError, setTypeMovieError] = useState<
     "notFound" | "added" | undefined
   >();
@@ -51,7 +51,6 @@ export function usePlaylist() {
   useEffect(() => {
     localStorage.setItem("movieList", JSON.stringify(movieList));
   }, [movieList]);
-
 
   const handleModal = () => {
     setIsShow(!isShow);
@@ -97,26 +96,22 @@ export function usePlaylist() {
     }
   };
 
-  const removeMovieList = (id: number) => {
-    console.log(movieList.find((currentMotvie: DataMovieType) => currentMotvie.Id === id))
-    setMovieList(
-      movieList.filter((currentMovie: DataMovieType) => currentMovie.Id !== id),
-    );
-  };
+  const handleRemove = (
+    remove: boolean,
+    id: number,
+    handleShowModalConfirmation: (remove: boolean) => void,
+  ) => {
+    if (remove) {
+      setMovieList((prev) => [
+        ...prev.filter((currentMovie: DataMovieType) => currentMovie.Id !== id),
+      ]);
 
-  const handleRemove = (remove: boolean, id: number | undefined) => {
-    console.log("ID do CustomHook", id)
-    if(!id) {
-      return
-    }
-    if(remove) {
-      removeMovieList(id)
-      setIsShowModalConfirmation(false)
+      handleShowModalConfirmation(false);
     } else {
-      setIsShowModalConfirmation(false)
-      return
+      handleShowModalConfirmation(false);
+      return;
     }
-  }
+  };
 
   return {
     Controller,
@@ -126,14 +121,12 @@ export function usePlaylist() {
     errors,
     isShow,
     addMovieToList,
-    removeMovieList,
     isShowModalError,
     movieList,
     dataMovie,
     typeMovieError,
-    setIsRemove,
     isShowModalConfirmation,
     setIsShowModalConfirmation,
-    handleRemove
+    handleRemove,
   };
 }
