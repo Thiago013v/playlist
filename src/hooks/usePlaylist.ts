@@ -62,28 +62,26 @@ export function usePlaylist() {
     movieList.forEach((currentMovie: DataMovieType) => {
       if (currentMovie.Title === response?.Title) {
         console.log("Deu");
-        condition = false;
+        condition = true;
       }
     });
 
-    /* O que falta? Eu preciso adicionar uma mensagem de ERRO avisando que o filme já foi adicionado à playlist. Falta apenas corrigir a ordem da estrutura de decisão. Colocando primeiramente os erros e somente no final, caso dê certo, a continuação do funcionamento do código. */
-
-    if (response) {
-      const dataMovie: DataMovieType = response;
-      setDataMovie(dataMovie);
-      handleModal();
-    } else if (!response) {
+    if (!response) {
       setTypeMovieError("notFound");
       setIsShowModalError(!isShowModalError);
       setTimeout(() => {
         setIsShowModalError(false);
       }, 2000);
-    } else {
+    } else if (response && condition) {
       setTypeMovieError("added");
       setIsShowModalError(!isShowModalError);
       setTimeout(() => {
         setIsShowModalError(false);
       }, 2000);
+    } else {
+      const dataMovie: DataMovieType = response;
+      setDataMovie(dataMovie);
+      handleModal();
     }
   };
 
