@@ -1,3 +1,4 @@
+import { PlaylistContext } from "./PlaylistContext";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -20,7 +21,13 @@ export interface DataMovieType {
   Poster: string;
 }
 
-export function usePlaylist() {
+interface PlaylistContextProviderType {
+  children: React.ReactNode;
+}
+
+export function PlaylistContextProvider({
+  children,
+}: PlaylistContextProviderType) {
   const [isShowModalSuggestion, setIsShowModalSuggestion] =
     useState<boolean>(false);
   const [isShowModalError, setIsShowModalError] = useState<boolean>(false);
@@ -30,7 +37,10 @@ export function usePlaylist() {
   const [typeMovieError, setTypeMovieError] = useState<
     "notFound" | "added" | undefined
   >();
-  const [dataMovie, setDataMovie] = useState<DataMovieType>();
+  const [dataMovie, setDataMovie] = useState<DataMovieType | undefined>();
+  const [dataMovieModalConfirm, setDataMoveiModalConfirm] = useState<
+    DataMovieType | undefined
+  >();
   const [movieList, setMovieList] = useState<DataMovieType[]>(() => {
     const movieList = localStorage.getItem("movieList");
 
@@ -96,38 +106,53 @@ export function usePlaylist() {
     }
   };
 
-  const handleRemove = (
-    remove: boolean,
-    id: number,
-    handleShowModalConfirmation: (remove: boolean) => void,
-  ) => {
+  const activeRemove = (id: number) => {
+    setIsShowModalConfirmation(!isShowModalConfirmation);
+
+    setDataMoveiModalConfirm(
+      movieList.find((currentMovie: DataMovieType) => currentMovie.Id === id),
+    );
+  };
+
+  const handleRemove = (remove: boolean, id: number | undefined) => {
     if (remove) {
       setMovieList((prev) => [
         ...prev.filter((currentMovie: DataMovieType) => currentMovie.Id !== id),
       ]);
 
-      handleShowModalConfirmation(false);
+      setIsShowModalConfirmation(!isShowModalConfirmation);
+      setIsShowModal(!isShowModal);
     } else {
-      handleShowModalConfirmation(false);
+      setIsShowModalConfirmation(!isShowModalConfirmation);
+      setIsShowModal(!isShowModal);
       return;
     }
   };
 
-  return {
-    Controller,
-    control,
-    handleSubmit,
-    onSubmit,
-    errors,
-    isShowModalSuggestion,
-    addMovieToList,
-    isShowModalError,
-    movieList,
-    dataMovie,
-    typeMovieError,
-    isShowModalConfirmation,
-    setIsShowModalConfirmation,
-    isShowModal,
-    handleRemove,
-  };
+  return (
+    <PlaylistContext.Provider
+      value={{
+        addMovieToList,
+        dataMovie,
+        handleRemove,
+        isShowModal,
+        isShowModalConfirmation,
+        isShowModalError,
+        isShowModalSuggestion,
+        movieList,
+        onSubmit,
+        typeMovieError,
+        control,
+        Controller,
+        errors,
+        handleSubmit,
+        setIsShowModalConfirmation,
+        setIsShowModal,
+        activeRemove,
+        dataMovieModalConfirm,
+      }}
+    >
+      {children}
+    </PlaylistContext.Provider>
+  );
 }

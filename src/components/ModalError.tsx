@@ -1,11 +1,9 @@
 import { motion, AnimatePresence } from "motion/react";
+import { usePlaylistContext } from "../hooks/usePlaylistContext";
 
-interface ModalErrorType {
-  isShowModalError: boolean;
-  typeError: "notFound" | "added" | undefined;
-}
+export function ModalError() {
+  const { isShowModalError, typeMovieError } = usePlaylistContext();
 
-export function ModalError({ isShowModalError, typeError }: ModalErrorType) {
   return (
     <AnimatePresence initial={false}>
       {isShowModalError ? (
@@ -16,7 +14,7 @@ export function ModalError({ isShowModalError, typeError }: ModalErrorType) {
           exit={{ opacity: 0 }}
         >
           <h2 className="text-2xl text-white text-center">
-            {typeError === "notFound"
+            {typeMovieError === "notFound"
               ? "Filme não encontrado"
               : "Filme já adicionado"}
           </h2>
