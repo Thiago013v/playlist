@@ -27,6 +27,8 @@ export function usePlaylistContext() {
     setIsShowModalConfirmation,
     typeMovieError,
     setIsShowModal,
+    activeRemove,
+    dataMovieModalConfirm,
   } = response;
 
   return {
@@ -45,6 +47,8 @@ export function usePlaylistContext() {
     onSubmit,
     setIsShowModalConfirmation,
     setIsShowModal,
+    activeRemove,
+    dataMovieModalConfirm,
     typeMovieError,
   };
 }

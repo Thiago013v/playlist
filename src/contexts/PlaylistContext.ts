@@ -57,13 +57,11 @@ interface PlaylistContextType {
   typeMovieError: "notFound" | "added" | undefined;
   dataMovie: DataMovieType | undefined;
   movieList: DataMovieType[];
+  dataMovieModalConfirm: DataMovieType | undefined;
   onSubmit: (data: playlistDataType) => void;
   addMovieToList: () => void;
-  handleRemove: (
-    remove: boolean,
-    id: number,
-    handleShowModalConfirmation: (remove: boolean) => void,
-  ) => void;
+  handleRemove: (remove: boolean, id: number | undefined) => void;
+  activeRemove: (id: number) => void;
 }
 
 export const PlaylistContext = createContext<PlaylistContextType | null>(null);

@@ -5,6 +5,7 @@ import type { DataMovieType } from "./contexts/PlayListContextProvider";
 import { CardSuggestionMovie } from "./components/CardSuggestionMovie";
 import { CardMovie } from "./components/CardMovie";
 import { ModalError } from "./components/ModalError";
+import { ModalConfirmation } from "./components/ModalConfirmation";
 
 export function App() {
   const {
@@ -23,6 +24,8 @@ export function App() {
       <CardSuggestionMovie></CardSuggestionMovie>
 
       <ModalError></ModalError>
+
+      <ModalConfirmation></ModalConfirmation>
 
       <div
         className={`min-h-svh bg-amber-200 grid grid-rows-[60px_1fr] grid-cols-[1fr] ${isShowModal && "brightness-50"}`}

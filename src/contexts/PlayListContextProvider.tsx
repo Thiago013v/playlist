@@ -38,6 +38,9 @@ export function PlaylistContextProvider({
     "notFound" | "added" | undefined
   >();
   const [dataMovie, setDataMovie] = useState<DataMovieType | undefined>();
+  const [dataMovieModalConfirm, setDataMoveiModalConfirm] = useState<
+    DataMovieType | undefined
+  >();
   const [movieList, setMovieList] = useState<DataMovieType[]>(() => {
     const movieList = localStorage.getItem("movieList");
 
@@ -103,20 +106,24 @@ export function PlaylistContextProvider({
     }
   };
 
-  const handleRemove = (
-    remove: boolean,
-    id: number,
-    handleShowModalConfirmation: (remove: boolean) => void,
-  ) => {
+  const activeRemove = (id: number) => {
+    setIsShowModalConfirmation(!isShowModalConfirmation);
+
+    setDataMoveiModalConfirm(
+      movieList.find((currentMovie: DataMovieType) => currentMovie.Id === id),
+    );
+  };
+
+  const handleRemove = (remove: boolean, id: number | undefined) => {
     if (remove) {
       setMovieList((prev) => [
         ...prev.filter((currentMovie: DataMovieType) => currentMovie.Id !== id),
       ]);
 
-      handleShowModalConfirmation(false);
+      setIsShowModalConfirmation(!isShowModalConfirmation);
       setIsShowModal(!isShowModal);
     } else {
-      handleShowModalConfirmation(false);
+      setIsShowModalConfirmation(!isShowModalConfirmation);
       setIsShowModal(!isShowModal);
       return;
     }
@@ -141,6 +148,8 @@ export function PlaylistContextProvider({
         handleSubmit,
         setIsShowModalConfirmation,
         setIsShowModal,
+        activeRemove,
+        dataMovieModalConfirm,
       }}
     >
       {children}
