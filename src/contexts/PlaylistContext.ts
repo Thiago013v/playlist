@@ -52,6 +52,7 @@ interface PlaylistContextType {
   isShowModalError: boolean;
   isShowModalConfirmation: boolean;
   isShowModal: boolean;
+  setIsShowModal: (boolean: boolean) => void;
   setIsShowModalConfirmation: (boolean: boolean) => void;
   typeMovieError: "notFound" | "added" | undefined;
   dataMovie: DataMovieType | undefined;

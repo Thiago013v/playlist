@@ -114,8 +114,10 @@ export function PlaylistContextProvider({
       ]);
 
       handleShowModalConfirmation(false);
+      setIsShowModal(!isShowModal);
     } else {
       handleShowModalConfirmation(false);
+      setIsShowModal(!isShowModal);
       return;
     }
   };
@@ -138,6 +140,7 @@ export function PlaylistContextProvider({
         errors,
         handleSubmit,
         setIsShowModalConfirmation,
+        setIsShowModal,
       }}
     >
       {children}
