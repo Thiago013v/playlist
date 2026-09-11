@@ -64,6 +64,27 @@ export function PlaylistContextProvider({
     localStorage.setItem("movieList", JSON.stringify(movieList));
   }, [movieList]);
 
+  useEffect(() => {
+    setInterval(() => {
+      const movieObject: DataMovieType | undefined = dataMovie;
+
+      const movieObjectList: DataMovieType[] = movieList.filter(
+        (currentMovie: DataMovieType) => currentMovie.Id === movieObject?.Id,
+      );
+
+      if (movieObjectList.length > 1 && movieObject) {
+        setMovieList((prev) => [
+          ...prev.filter(
+            (currentMovie: DataMovieType) =>
+              currentMovie.Id !== movieObject?.Id,
+          ),
+        ]);
+
+        setMovieList((prev) => [...prev, movieObject]);
+      }
+    }, 1000);
+  }, [dataMovie, movieList]);
+
   const onSubmit = async (data: playlistDataType) => {
     const response = await apiMovie(data);
 

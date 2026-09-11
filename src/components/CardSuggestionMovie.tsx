@@ -40,7 +40,7 @@ export function CardSuggestionMovie() {
             </div>
 
             <button
-              className="border border-black w-full rounded-md cursor-pointer hover:bg-green-950 hover:text-white mt-4 lg:col-start-1 lg:col-end-3 log:row-start-3 lg:row-end-4 "
+              className="border border-black w-full rounded-md cursor-pointer hover:bg-green-950 hover:text-white mt-4 lg:col-start-1 lg:col-end-3 log:row-start-3 lg:row-end-4"
               onClick={addMovieToList}
             >
               Add to List
