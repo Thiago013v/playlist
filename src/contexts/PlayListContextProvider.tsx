@@ -42,11 +42,15 @@ export function PlaylistContextProvider({
     DataMovieType | undefined
   >();
   const [movieList, setMovieList] = useState<DataMovieType[]>(() => {
-    const movieList = localStorage.getItem("movieList");
+    try {
+      const movieList = localStorage.getItem("movieList");
 
-    if (movieList) {
-      return JSON.parse(movieList);
-    } else {
+      if (movieList) {
+        return JSON.parse(movieList);
+      } else {
+        return [];
+      }
+    } catch {
       return [];
     }
   });
