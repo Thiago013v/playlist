@@ -3,7 +3,8 @@ import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useEffect } from "react";
-import { apiMovie } from "../api/apiMovie";
+import axios from "axios";
+import type { MovieType } from "../types/apiType";
 
 const playlistSchema = yup.object({
   name: yup.string().required("*Este Campo é obrigatório"),
@@ -35,7 +36,7 @@ export function PlaylistContextProvider({
     useState<boolean>(false);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [typeMovieError, setTypeMovieError] = useState<
-    "notFound" | "added" | undefined
+    "notFound" | "added" | "offline" | undefined
   >();
   const [dataMovie, setDataMovie] = useState<DataMovieType | undefined>();
   const [dataMovieModalConfirm, setDataMoveiModalConfirm] = useState<
@@ -68,6 +69,34 @@ export function PlaylistContextProvider({
     localStorage.setItem("movieList", JSON.stringify(movieList));
   }, [movieList]);
 
+  const apiMovie = async (data: playlistDataType) => {
+    try {
+      const axiosResponse = !data.year
+        ? await axios.get(
+            `https://www.omdbapi.com/?t=${data.name}&apikey=efd76c49`,
+          )
+        : await axios.get(
+            `https://www.omdbapi.com/?t=${data.name}&y=${data.year}&apikey=efd76c49`,
+          );
+
+      const dataMovieData: MovieType = axiosResponse.data;
+
+      if (dataMovieData.Response === "True") {
+        const { Actors, Plot, Title, Genre, Poster } = dataMovieData;
+
+        const Id: number = Math.random();
+
+        return { Actors, Plot, Title, Genre, Poster, Id };
+      } else {
+        return null;
+      }
+    } catch {
+      setTypeMovieError("offline");
+      setIsShowModalError(!isShowModal);
+      setIsShowModal(!isShowModal);
+    }
+  };
+
   const onSubmit = async (data: playlistDataType) => {
     const response = await apiMovie(data);
 
@@ -80,7 +109,7 @@ export function PlaylistContextProvider({
       }
     });
 
-    if (!response) {
+    if (response === null) {
       setTypeMovieError("notFound");
       setIsShowModalError(!isShowModalError);
       setTimeout(() => {
@@ -92,7 +121,7 @@ export function PlaylistContextProvider({
       setTimeout(() => {
         setIsShowModalError(false);
       }, 2000);
-    } else {
+    } else if (response && !condition) {
       const dataMovie: DataMovieType = response;
       setDataMovie(dataMovie);
       setIsShowModalSuggestion(!isShowModalSuggestion);
@@ -143,6 +172,7 @@ export function PlaylistContextProvider({
     <PlaylistContext.Provider
       value={{
         addMovieToList,
+        setTypeMovieError,
         dataMovie,
         handleRemove,
         isShowModal,

@@ -29,6 +29,7 @@ export function usePlaylistContext() {
     setIsShowModal,
     activeRemove,
     dataMovieModalConfirm,
+    setTypeMovieError,
   } = response;
 
   return {
@@ -50,5 +51,6 @@ export function usePlaylistContext() {
     activeRemove,
     dataMovieModalConfirm,
     typeMovieError,
+    setTypeMovieError,
   };
 }
