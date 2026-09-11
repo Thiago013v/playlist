@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { playlistDataType } from "../hooks/usePlaylist";
+import type { playlistDataType } from "../contexts/PlayListContextProvider";
 import type { MovieType } from "../types/apiType";
 
 export async function apiMovie(data: playlistDataType) {
