@@ -15,7 +15,9 @@ export function CardSuggestionMovie() {
           className="bg-amber-100 w-[80%] inline-block sm:w-[50%] lg:w-[45%] lg:h-[90%] max-h-162.5 rounded-md absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 p-4"
         >
           <div className="flex flex-col justify-center items-center h-full lg:grid lg:grid-cols-[1fr_1fr] lg:grid-rows-[50px_1fr_1fr] lg:h-full">
-            <h1 className="text-2xl mb-2 lg:col-start-1 lg:col-end-3 lg:row-start-1 lg:row-end-2">
+            <h1
+              className={`${dataMovie?.Title && dataMovie.Title.length <= 50 && "text-2xl"} font-bold mb-2 lg:col-start-1 lg:col-end-3 lg:row-start-1 lg:row-end-2`}
+            >
               {dataMovie?.Title}
             </h1>
 
